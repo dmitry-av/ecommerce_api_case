@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Purchase the order</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=fetch"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <section>
+        <div class="product">
+            <div class="description">
+                <h3>{{ order.id }}</h3>
+                <hr />
+                <div>
+                    <h5>${{ order.main_total }}</h5>
+                    <form action="{% url 'order-checkout-session' order.id %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit">Buy</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

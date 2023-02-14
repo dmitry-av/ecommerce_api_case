@@ -1,0 +1,13 @@
+<h1>Item List</h1>
+  {% if item_list %}
+  <ul>
+    {% for item in item_list %}
+      <li>
+          {{ item.name }} ({{ item.price }})
+          (<a href="{% url 'item-detail' item.pk %}">Details</a>)
+      </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>There are no items in the library.</p>
+  {% endif %}
