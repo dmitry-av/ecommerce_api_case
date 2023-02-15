@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from django.views import View
 from django.views.generic import TemplateView
 from django.conf import settings
+import os
 
 from purchase.api.serializers import OrderItemSerializer, AddOrderItemSerializer, OrderSerializer
 from purchase.models import Item, Order, OrderItem
@@ -54,7 +55,7 @@ class OrderItemViewSet(ModelViewSet):
 class CreateCheckoutSessionView(View):
     def post(self, request, *args, **kwargs):
         item = Item.objects.get(id=self.kwargs["pk"])
-        domain = "http://127.0.0.1:8000"
+        domain = os.environ.get("CURRENT_DOMAIN")
         checkout_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=[
@@ -73,7 +74,7 @@ class CreateCheckoutSessionView(View):
 class OrderCheckoutSessionView(View):
     def post(self, request, *args, **kwargs):
         order = Order.objects.get(id=self.kwargs["pk"])
-        domain = "http://127.0.0.1:8000"
+        domain = os.environ.get("CURRENT_DOMAIN")
         line_items = []
         for item in order.items.all():
             line_items.append(

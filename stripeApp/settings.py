@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "purchase",
-
 ]
+
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

@@ -37,9 +37,9 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     product = models.ForeignKey(
-        Item, on_delete=models.SET_NULL, null=True, related_name='orderitem')
+        Item, on_delete=models.CASCADE, null=True, related_name='orderitem')
     order = models.ForeignKey(
-        Order, on_delete=models.SET_NULL, null=True, related_name="items")
+        Order, on_delete=models.CASCADE, null=True, related_name="items")
     quantity = models.PositiveIntegerField(default=0, null=True, blank=True)
 
     def get_total(self):
