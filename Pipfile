@@ -9,6 +9,7 @@ stripe = "*"
 djangorestframework = "*"
 uuid = "*"
 drf-nested-routers = "*"
+python-dotenv = "*"
 
 [dev-packages]
 autopep8 = "*"

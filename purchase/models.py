@@ -13,11 +13,10 @@ class Item(models.Model):
     description = models.TextField()
     stripe_product_id = models.CharField(max_length=100)
     stripe_price_id = models.CharField(max_length=100)
-    currency = models.CharField(max_length=5)
     price = models.PositiveIntegerField(null=True)  # in cents
 
     def get_display_price(self):
-        return "{0:.2f}".format(self.price / 100)
+        return "{0:.2f}".format(self.price)
 
     def __str__(self):
         return self.name
@@ -30,7 +29,7 @@ class Order(models.Model):
     def main_total(self):
         items = self.items.all()
         total = sum([item.quantity * item.product.price for item in items])
-        return total/100
+        return total
 
     def __str__(self):
         return str(self.id)
