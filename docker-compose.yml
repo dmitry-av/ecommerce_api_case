@@ -8,4 +8,4 @@ services:
     ports:
       - 4000:8000
     env_file:
-      - ./env/django.env
+      - ./env/docker.env

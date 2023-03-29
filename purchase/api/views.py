@@ -1,18 +1,41 @@
+import os
 import stripe
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
-from django.shortcuts import get_object_or_404, redirect
+from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
+from rest_framework import generics
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+
 from django.views import View
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import TemplateView
 from django.conf import settings
-import os
 
-from purchase.api.serializers import OrderItemSerializer, AddOrderItemSerializer, OrderSerializer
+
 from purchase.models import Item, Order, OrderItem
+from purchase.api.serializers import OrderItemSerializer, AddOrderItemSerializer, OrderSerializer, UserSerializer, RegisterSerializer
+from purchase.api.permissions import IsCreatorPermission
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
+
+class UserDetailAPI(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (AllowAny,)
+
+    def get(self, request, *args, **kwargs):
+        user = User.objects.get(id=request.user.id)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+
+class RegisterUserAPIView(generics.CreateAPIView):
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializer
 
 
 class ItemDetail(APIView):
@@ -34,8 +57,16 @@ class OrderDetail(APIView):
 
 
 class OrderViewSet(ModelViewSet):
+    permission_classes = [IsAuthenticated | IsCreatorPermission]
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
+
+    def get_queryset(self):
+        # if self.action == "list":
+        return self.queryset.filter(creator=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)
 
 
 class OrderItemViewSet(ModelViewSet):

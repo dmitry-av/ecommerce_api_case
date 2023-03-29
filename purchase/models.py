@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
 
-User = get_user_model()
+UserModel = get_user_model()
 
 
 class Item(models.Model):
@@ -25,6 +25,7 @@ class Item(models.Model):
 class Order(models.Model):
     id = models.UUIDField(default=uuid.uuid4, primary_key=True)
     created = models.DateTimeField(auto_now_add=True)
+    creator = models.ForeignKey(UserModel, on_delete=models.CASCADE)
 
     def main_total(self):
         items = self.items.all()
