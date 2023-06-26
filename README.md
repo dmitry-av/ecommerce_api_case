@@ -24,3 +24,12 @@ Making an empty POST request to **/orders** will return a response with the ID o
 You can make unlimited requests of this type, adding new items to the order each time.
 To pay for the created order:  
 Making a GET request to **/order/{order id}** returns HTML with a payment button. Furthermore, a Stripe Session will be generated (the payment form will include all the items added to the order and the total amount).
+
+<div>
+<img src="https://github.com/dmitry-av/ecommerce_api_case/assets/101987388/8dbe1bcd-ef68-45ce-b288-a529b875e82d" alt="drawing" width="500"/>  
+</div>
+<div>
+<img src="https://github.com/dmitry-av/ecommerce_api_case/assets/101987388/cb18f4b8-8c3b-41f3-9b2b-6786e45c0a77" alt="drawing" width="500"/>  
+</div>
+
+
