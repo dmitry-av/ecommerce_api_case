@@ -14,7 +14,7 @@ In the Django Admin panel, you can view and edit objects (Item, Order, OrderItem
 
 You can pay for individual items or collect items into an order:
 Making a GET request to **/item/{id}** will retrieve an HTML page with a BUY button. After that, a request is made to the Stripe Session Form, allowing you to make a payment for the individual item.
-Making an empty POST request to **/orders** will return a response with the ID of the created Order. After that, by sending a POST request to **/orders/{order id}/items/**in the following format:
+Making an empty POST request to **/orders** will return a response with the ID of the created Order. After that, by sending a POST request to **/orders/{order id}/items/** in the following format:
 
 {  
 "product_id": {item id},  
